@@ -6,9 +6,12 @@ struct Node {
     std::shared_ptr<Node> next;
 };
 
+// Variable que apunta al primer elemento de la lista
 std::shared_ptr<Node> primero;
 
+// Prototipos de funcion
 std::shared_ptr<Node> create_node(int value);
+
 void push_front(int value);
 void push_back(int value);
 void insert(int value, int position);
@@ -18,28 +21,32 @@ void print_list();
 int countNodes();
 
 int main() {
+    // inicializa el primer nodo
     primero = create_node(0);
 
+    // prueba push front
     push_front(1);
     print_list();
 
+    // prueba push back
     push_back(4);
     print_list();
 
+    // prueba insert valido
     insert(9, 2);
     print_list();
 
+    // prueba insert invalido
     insert(100, 7);
     print_list();
 
-    std::cout << "Borrando" << std::endl;
+    // prueba erase valido
     erase(2);
     print_list();
 
+    // prueba erase invalido
     erase(99);
     print_list();
-
-
 
     return 0;
 }
@@ -91,7 +98,7 @@ void erase(int position) {
     std::shared_ptr<Node> actual = primero;
 
     if (position >= nodeCount) {
-        std::cerr << "Posicion invalida, borrando ultimo nodo" << std::endl;\
+        std::cerr << "Posicion invalida, borrando ultimo nodo" << std::endl;
         position = nodeCount - 1;
     }
     
