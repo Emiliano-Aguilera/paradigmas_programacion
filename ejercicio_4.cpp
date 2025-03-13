@@ -21,29 +21,25 @@ int main() {
     // Ejercicio 4c
     testCompareString_const(string_1, string_2);
 
+    cout << "_______________________________" << endl;
     // Test 2
-    string_1 = "Estas strings son distintas, deberia medir mas de 64 caracteres de largo.";
-    string_2 = "Esta string es distinta a la de arriba, pero debe medir 64 caracteres de largo.";
+    const char* string_3 = "Estas strings son distintas, deberia medir mas de 64 caracteres de largo:";
+    const char* string_4 = "Estas strings son distintas, deberia medir mas de 64 caracteres de largo;";
 
     cout << "Resultado test 2" << endl;
     // Ejercicio 4a y 4b
-    testCompareString(string_1, string_2);
+    testCompareString(string_3, string_4);
     // Ejercicio 4c
-    testCompareString_const(string_1, string_2);
+    testCompareString_const(string_3, string_4);
+
     return 0;
 }
 
 bool compareString (const char* s1, const char* s2, int position) {
-    int length = sizeof(s1) / sizeof(char);
-    int length_1 = sizeof(s1) / sizeof(char);
-
-    if (length != length_1) {
-        return false;
-    }
-    else if (s1[position] == s2[position] && position < length){
+    if (s1[position] == s2[position] && s1[position + 1] != '\0'){
         return compareString(s1, s2, position + 1);
-    } 
-    else if (s1[position] == s2[position] && position == length) {
+    }
+    else if (s1[position] == s2[position] && s1[position + 1] == '\0') {
         return true;
     }
     else {
@@ -52,16 +48,10 @@ bool compareString (const char* s1, const char* s2, int position) {
 }
 
 constexpr bool compareString_const (const char* s1, const char* s2, int position) {
-    int length = sizeof(s1) / sizeof(char);
-    int length_1 = sizeof(s1) / sizeof(char);
-
-    if (length != length_1) {
-        return false;
-    }
-    else if (s1[position] == s2[position] && position < length){
+    if (s1[position] == s2[position] && s1[position + 1] != '\0'){
         return compareString(s1, s2, position + 1);
-    } 
-    else if (s1[position] == s2[position] && position == length) {
+    }
+    else if (s1[position] == s2[position] && s1[position + 1] == '\0') {
         return true;
     }
     else {
@@ -69,11 +59,11 @@ constexpr bool compareString_const (const char* s1, const char* s2, int position
     }
 }
 
-void testCompareString(const char* string_1, const char* string_2) {
+void testCompareString(const char* s1, const char* s2) {
     // Tomar tiempo de inicio
     auto startTime = high_resolution_clock::now();
     // Ejecutar comparacion
-    bool resultado = compareString(string_1, string_2, 0);
+    bool resultado = compareString(s1, s2, 0);
     // Tomar tiempo de fin
     auto endTime = high_resolution_clock::now();
     // Calcular diferencia entre los tiempos
@@ -83,16 +73,16 @@ void testCompareString(const char* string_1, const char* string_2) {
     cout << "Resultado: " << boolalpha << resultado << endl;
 }
 
-void testCompareString(const char* string_1, const char* string_2) {
+void testCompareString_const(const char* s1, const char* s2) {
     // Tomar tiempo de inicio
     auto startTime_c = high_resolution_clock::now();   
     // Ejecutar comparacion
-    bool resultado_c = compareString_const(string_1, string_2, 0);
+    bool resultado_c = compareString_const(s1, s2, 0);
     // Tomar tiempo de fin
     auto endTime_c = high_resolution_clock::now();
     // Calcular diferencia entre los tiempos
     auto elapsedTime_c = duration_cast<nanoseconds>(endTime_c - startTime_c);
     
-    cout << "Tiempo en runtime: " << elapsedTime_c.count() << "[ns]" << endl;
+    cout << "Tiempo en compilacion: " << elapsedTime_c.count() << "[ns]" << endl;
     cout << "Resultado: " << boolalpha << resultado_c << endl;
 }
