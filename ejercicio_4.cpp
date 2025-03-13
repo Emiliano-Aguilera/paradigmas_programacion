@@ -44,7 +44,7 @@ bool compareString (const char* s1, const char* s2, int position) {
     if (length != length_1) {
         return false;
     }
-    if (s1[position] == s2[position] && position < length){
+    else if (s1[position] == s2[position] && position < length){
         return compareString(s1, s2, position + 1);
     } 
     else if (s1[position] == s2[position] && position == length) {
@@ -62,7 +62,7 @@ constexpr bool compareString_const (const char* s1, const char* s2, int position
     if (length != length_1) {
         return false;
     }
-    if (s1[position] == s2[position] && position < length){
+    else if (s1[position] == s2[position] && position < length){
         return compareString(s1, s2, position + 1);
     } 
     else if (s1[position] == s2[position] && position == length) {
