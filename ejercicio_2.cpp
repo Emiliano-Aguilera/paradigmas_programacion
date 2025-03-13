@@ -4,6 +4,7 @@
 #include <fstream>
 #include <stdexcept>
 
+// Prototipos de funcion
 void logMessage(std::string, int tag); // logMessage normal
 void logMessage(std::string message, std::string archivo, int linea); // logMessage error en linea de archivo
 void logMessage(std::string message, std::string username); // logMessage seguridad de usuario
@@ -35,7 +36,8 @@ void logMessage(std::string message, int tag) {
             throw std::runtime_error("Error abriendo archivo");
         }
     } else {
-        std::string runtimeMessage = std::format("Tag invalido: {}, Mensaje: \"{}\"", tag, message);
+        std::string runtimeMessage = std::format(
+            "Tag invalido: {}, Mensaje: \"{}\"", tag, message);
         throw std::runtime_error(runtimeMessage);
     }
 }
@@ -43,7 +45,8 @@ void logMessage(std::string message, int tag) {
 // Ejercicio b
 // Ejercicio II
 void logMessage(std::string message, std::string archivo, int linea) {
-    std::string errorMessage = std::format("{} en la linea {} del archivo {}", message, linea, archivo);
+    std::string errorMessage = std::format(
+        "{} en la linea {} del archivo {}", message, linea, archivo);
     logMessage(errorMessage, ERROR);
 }
 
