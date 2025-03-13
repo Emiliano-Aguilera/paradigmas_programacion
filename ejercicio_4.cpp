@@ -1,39 +1,35 @@
 #include <iostream>
 #include <chrono>
 
+using namespace std;
+using namespace chrono;
+
+// Prototipo de funcion
 bool compareString (const char*, const char*, int);
 constexpr bool compareString_const (const char*, const char*, int);
-
-
+void testCompareString(const char*, const char*);
+void testCompareString_const(const char*, const char*);
 
 int main() {
-    const char* string_1 = "abababababab";
-    const char* string_2 = "abababababab";
+    // Test 1
+    const char* string_1 = "Estas strings son identicas, pero deben tener 64 caracteres como minimo";
+    const char* string_2 = "Estas strings son identicas, pero deben tener 64 caracteres como minimo";
 
+    cout << "Resultado test 1" << endl;
     // Ejercicio 4a y 4b
-    auto startTime = std::chrono::high_resolution_clock::now();
-    std::cout << "Resultado: ";
-    std::cout << std::boolalpha <<  compareString(string_1, string_2, 0);
-    std::cout << std::endl;
-    auto endTime = std::chrono::high_resolution_clock::now();
-
-    auto elapsedTime = std::chrono::duration_cast<std::chrono::nanoseconds>(endTime - startTime);
-    std::cout << "Tiempo en runtime: ";
-    std::cout << elapsedTime.count() << "[ns]";
-    std::cout << std::endl;
-
+    testCompareString(string_1, string_2);
     // Ejercicio 4c
-    startTime = std::chrono::high_resolution_clock::now();    
-    std::cout << "Resultado: ";
-    std::cout << std::boolalpha << compareString_const(string_1, string_2, 0);
-    std::cout << std::endl;
-    endTime = std::chrono::high_resolution_clock::now();
+    testCompareString_const(string_1, string_2);
 
-    elapsedTime = std::chrono::duration_cast<std::chrono::nanoseconds>(endTime - startTime);
-    std::cout << "Tiempo en compilacion: ";
-    std::cout << elapsedTime.count() << "[ns]";
-    std::cout << std::endl;
+    // Test 2
+    string_1 = "Estas strings son distintas, deberia medir mas de 64 caracteres de largo.";
+    string_2 = "Esta string es distinta a la de arriba, pero debe medir 64 caracteres de largo.";
 
+    cout << "Resultado test 2" << endl;
+    // Ejercicio 4a y 4b
+    testCompareString(string_1, string_2);
+    // Ejercicio 4c
+    testCompareString_const(string_1, string_2);
     return 0;
 }
 
@@ -71,4 +67,32 @@ constexpr bool compareString_const (const char* s1, const char* s2, int position
     else {
         return false;
     }
+}
+
+void testCompareString(const char* string_1, const char* string_2) {
+    // Tomar tiempo de inicio
+    auto startTime = high_resolution_clock::now();
+    // Ejecutar comparacion
+    bool resultado = compareString(string_1, string_2, 0);
+    // Tomar tiempo de fin
+    auto endTime = high_resolution_clock::now();
+    // Calcular diferencia entre los tiempos
+    auto elapsedTime = (endTime - startTime);
+    
+    cout << "Tiempo en runtime: " << elapsedTime.count() << "[ns]" << endl;
+    cout << "Resultado: " << boolalpha << resultado << endl;
+}
+
+void testCompareString(const char* string_1, const char* string_2) {
+    // Tomar tiempo de inicio
+    auto startTime_c = high_resolution_clock::now();   
+    // Ejecutar comparacion
+    bool resultado_c = compareString_const(string_1, string_2, 0);
+    // Tomar tiempo de fin
+    auto endTime_c = high_resolution_clock::now();
+    // Calcular diferencia entre los tiempos
+    auto elapsedTime_c = duration_cast<nanoseconds>(endTime_c - startTime_c);
+    
+    cout << "Tiempo en runtime: " << elapsedTime_c.count() << "[ns]" << endl;
+    cout << "Resultado: " << boolalpha << resultado_c << endl;
 }
