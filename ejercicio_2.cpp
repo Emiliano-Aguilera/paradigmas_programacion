@@ -4,26 +4,28 @@
 #include <fstream>
 #include <stdexcept>
 
+using namespace std;
+
 // Prototipos de funcion
-void logMessage(std::string, int tag); // logMessage normal
-void logMessage(std::string message, std::string archivo, int linea); // logMessage error en linea de archivo
-void logMessage(std::string message, std::string username); // logMessage seguridad de usuario
+void logMessage(string, int tag); // logMessage normal
+void logMessage(string message, string archivo, int linea); // logMessage error en linea de archivo
+void logMessage(string message, string username); // logMessage seguridad de usuario
 
 int test_logMessage();
 
 // LAST no es valido, se usa para poder añadir nuevas tags sin necesidad de modificar el check
 enum TAGS {DEBUG, INFO, WARNING, ERROR, CRITICAL, SECURITY, LAST};
-const std::string tagStrings[] = {"DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL", "SECURITY"};
+const string tagStrings[] = {"DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL", "SECURITY"};
 
 int main() {
     return test_logMessage();
 }
 
 // Ejercicio a
-void logMessage(std::string message, int tag) {
+void logMessage(string message, int tag) {
     // Abre el archivo en modo append
-    std::ofstream outFile("log.txt", std::ios::app);
-    std::string tag_string;
+    ofstream outFile("log.txt", ios::app);
+    string tag_string;
 
     /* Checkea que el tag usado sea correcto, de lo contrario inserta un tag de error con el 
         mensaje de error*/
@@ -31,28 +33,28 @@ void logMessage(std::string message, int tag) {
         tag_string = tagStrings[tag];
 
         if (outFile.is_open()) {
-            outFile << std::format("[{}] <{}>\n", tag_string, message);
+            outFile << format("[{}] <{}>\n", tag_string, message);
         } else {
-            throw std::runtime_error("Error abriendo archivo");
+            throw runtime_error("Error abriendo archivo");
         }
     } else {
-        std::string runtimeMessage = std::format(
+        string runtimeMessage = format(
             "Tag invalido: {}, Mensaje: \"{}\"", tag, message);
-        throw std::runtime_error(runtimeMessage);
+        throw runtime_error(runtimeMessage);
     }
 }
 
 // Ejercicio b
 // Ejercicio II
-void logMessage(std::string message, std::string archivo, int linea) {
-    std::string errorMessage = std::format(
+void logMessage(string message, string archivo, int linea) {
+    string errorMessage = format(
         "{} en la linea {} del archivo {}", message, linea, archivo);
     logMessage(errorMessage, ERROR);
 }
 
 // Ejercicio III
-void logMessage(std::string message, std::string username){
-    std::string accessMessage = std::format("{} to {}", message, username);
+void logMessage(string message, string username){
+    string accessMessage = format("{} to {}", message, username);
     logMessage(accessMessage, SECURITY);
 }
 
@@ -61,7 +63,7 @@ int test_logMessage() {
     try {
         // Una entrada de cada tipo para logMessage (ejercicio a)
         for (int i = DEBUG; i <= CRITICAL; i++) {
-            logMessage(std::format("{} test message.", tagStrings[i]), i);
+            logMessage(format("{} test message.", tagStrings[i]), i);
         }
         // Una entrada de tipo ERROR que especifica la linea y el archivo (ejercicio b II)
         logMessage("Syntax Error", "ejercicio_1.cpp", 25);
@@ -77,7 +79,7 @@ int test_logMessage() {
         
         return 0;
     } 
-    catch (std::runtime_error& e) {
+    catch (runtime_error& e) {
         logMessage(e.what(), ERROR);
         return 1;
     } 
