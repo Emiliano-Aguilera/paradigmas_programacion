@@ -2,7 +2,9 @@
 #include <format>
 #include <vector>
 
-using vector_int =  std::vector<std::vector<int>>;
+using namespace std;
+
+using vector_int =  vector<vector<int>>;
 
 // prototipos de funcion
 vector_int createMatrix(int size);
@@ -12,13 +14,13 @@ void printMatrix_b(vector_int matrix, int size);
 int main() {
     int n = 0;
 
-    std::cout << "Ingrese n: ";
-    std::cin >> n;
+    cout << "Ingrese n: ";
+    cin >> n;
 
     while (n <= 1) {
-        std::cout << "n debe ser mayor a 1." << '\n';
-        std::cout << "Ingrese n: ";
-        std::cin >> n;
+        cout << "n debe ser mayor a 1." << '\n';
+        cout << "Ingrese n: ";
+        cin >> n;
     }
     
     vector_int matrix = createMatrix(n);
@@ -34,7 +36,7 @@ vector_int createMatrix(int size) {
     vector_int matrix (size);
 
     for (int i = 0; i < size; i++){
-        matrix[i] = std::vector<int> (size); 
+        matrix[i] = vector<int> (size); 
     }
     
     for (int i = 0; i < size; i++) {
@@ -53,7 +55,7 @@ void printMatrix(vector_int matrix, int size) {
     int j = size-1;
     
     for (int k = 0; k < size*size; k++) {
-        std::cout << std::format("M[{}][{}] = {}\n", i, j, matrix[i][j]);
+        cout << format("M[{}][{}] = {}\n", i, j, matrix[i][j]);
         if (j == 0) {
             i--;
             j = size-1;
@@ -69,6 +71,6 @@ void printMatrix_b(vector_int matrix, int size) {
     for (int k = 0; k < size*size; k++) {
         int i = size - (k / size) - 1;
         int j = size - (k % size) - 1;
-        std::cout << std::format("M[{}][{}] = {}\n", i, j, matrix[i][j]);
+        cout << format("M[{}][{}] = {}\n", i, j, matrix[i][j]);
     }
 }

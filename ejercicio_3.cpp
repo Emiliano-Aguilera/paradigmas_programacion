@@ -1,16 +1,18 @@
 #include <iostream>
 #include <memory>
 
+using namespace std;
+
 struct Node {
     int value {};
-    std::shared_ptr<Node> next;
+    shared_ptr<Node> next;
 };
 
 // Variable que apunta al primer elemento de la lista
-std::shared_ptr<Node> primero;
+shared_ptr<Node> primero;
 
 // Prototipos de funcion
-std::shared_ptr<Node> create_node(int value);
+shared_ptr<Node> create_node(int value);
 
 void push_front(int value);
 void push_back(int value);
@@ -51,22 +53,22 @@ int main() {
     return 0;
 }
 
-std::shared_ptr<Node> create_node(int value) {
-    auto nodo = std::make_shared<Node>();
+shared_ptr<Node> create_node(int value) {
+    auto nodo = make_shared<Node>();
     nodo->value = value;
     nodo->next = nullptr;
     return nodo;
 }
 
 void push_front(int value) {
-    std::shared_ptr<Node> nodo = create_node(value);
+    shared_ptr<Node> nodo = create_node(value);
     nodo->next = primero;
     primero = nodo;
 }
 
 void push_back(int value) {
-    std::shared_ptr<Node> nodo = create_node(value);
-    std::shared_ptr<Node> actual = primero;
+    shared_ptr<Node> nodo = create_node(value);
+    shared_ptr<Node> actual = primero;
 
     while (actual->next != nullptr) {
         actual = actual->next;
@@ -79,11 +81,11 @@ void insert(int value, int position) {
     int nodeCount = countNodes();
 
     if (nodeCount <= position) {
-        std::cerr << "Posicion invalida, insertando nodo al final." << std::endl;
+        cerr << "Posicion invalida, insertando nodo al final." << endl;
         push_back(value);
     } else {
-        std::shared_ptr<Node> nodo = create_node(value);
-        std::shared_ptr<Node> actual = primero;
+        shared_ptr<Node> nodo = create_node(value);
+        shared_ptr<Node> actual = primero;
 
         for (int i = 0; i < position - 1; i++) {
             actual = actual->next;
@@ -95,10 +97,10 @@ void insert(int value, int position) {
 
 void erase(int position) {
     int nodeCount = countNodes();
-    std::shared_ptr<Node> actual = primero;
+    shared_ptr<Node> actual = primero;
 
     if (position >= nodeCount) {
-        std::cerr << "Posicion invalida, borrando ultimo nodo" << std::endl;
+        cerr << "Posicion invalida, borrando ultimo nodo" << endl;
         position = nodeCount - 1;
     }
     
@@ -110,17 +112,17 @@ void erase(int position) {
 }   
  
 void print_list() {
-    std::shared_ptr<Node> actual = primero;
+    shared_ptr<Node> actual = primero;
 
     while (actual != nullptr) {
-        std::cout << actual->value << " -> ";
+        cout << actual->value << " -> ";
         actual = actual->next;
     }
-    std::cout << "null" << std::endl;
+    cout << "null" << endl;
 }
 
 int countNodes() {
-    std::shared_ptr<Node> actual = primero;
+    shared_ptr<Node> actual = primero;
     int nodeCount {};
 
     while (actual != nullptr) {
