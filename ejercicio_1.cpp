@@ -152,8 +152,8 @@ void compareSolutions(int precision) {
     }
 
     /* 
-    Se divide la suma de tiempos entre la precision - 1 para obtener el promedio, se resta 1 ya que es el tamaño minimo de matriz
-     por lo que no se ejecutan 100 mediciones, sino 100 - 1, o sea 99
+    Se divide la suma de tiempos entre la precision - 1 para obtener el promedio, se resta 1 ya que 
+    es el tamaño minimo de matriz por lo que no se ejecutan 100 mediciones, sino 100 - 1, o sea 99.
     */
     auto tiempo_promedio_1 = sumT_1 / (precision - 1);
     auto tiempo_promedio_2 = sumT_2 / (precision - 1);
