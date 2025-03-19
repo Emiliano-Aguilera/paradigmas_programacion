@@ -14,12 +14,12 @@ Luego se debe crear una funcion que imprima la matriz usando un solo loop.
 
 using namespace std;
 using namespace chrono;
-using vector_int =  vector<vector<int>>;
+using VectorInt =  vector<vector<int>>;
 
 // prototipos de funcion
-vector_int createMatrix(int size);
-void printMatrix(vector_int matrix);
-void printMatrix_b(vector_int matrix);
+VectorInt createMatrix(int size);
+void printMatrix(VectorInt matrix);
+void printMatrix_b(VectorInt matrix);
 void compareSolutions(int precision);
 
 int main() {
@@ -36,7 +36,7 @@ int main() {
     }
     
     // Crear la matriz
-    vector_int matrix = createMatrix(n);
+    VectorInt matrix = createMatrix(n);
 
     // Imprimir matriz
     printMatrix(matrix);
@@ -59,9 +59,9 @@ int main() {
 // Declaracion de funciones
 
 // Funcion que devuelve una matriz en base a un tamaño
-vector_int createMatrix(int size) {
+VectorInt createMatrix(int size) {
     // Primero crea un vector de longitud size
-    vector_int matrix (size);
+    VectorInt matrix (size);
 
     // Luego rellena el vector con vectores de longitud size
     for (int i = 0; i < size; i++){
@@ -81,7 +81,7 @@ vector_int createMatrix(int size) {
 }
 
 // Imprime una matriz sin usar condicionales con un solo for 
-void printMatrix(vector_int matrix) {
+void printMatrix(VectorInt matrix) {
     // Calcular el tamaño de la matriz
     int size = matrix.size();
 
@@ -96,7 +96,7 @@ void printMatrix(vector_int matrix) {
 }
 
 // Imprime una matriz usando condicionales y un solo for
-void printMatrix_b(vector_int matrix) {
+void printMatrix_b(VectorInt matrix) {
     // Calcula el tamaño de la matriz
     int size = matrix.size();
 
@@ -127,37 +127,37 @@ ya que se calcula el promedio de todos los tiempos.
 */
 void compareSolutions(int precision) {
     // Variables que llevan la suma de los tiempos
-    int sumT_1;
-    int sumT_2;
+    int sumT1;
+    int sumT2;
 
     for (int i = 2; i <= precision; i++) {
-        vector_int matrix = createMatrix(i);
+        VectorInt matrix = createMatrix(i);
         // Tomar el tiempo que toma imprimir con el metodo de condicionales
         auto startTime = high_resolution_clock::now();
         printMatrix(matrix);
         auto endTime = high_resolution_clock::now();
 
         // Calcular diferencia entre los tiempos
-        auto elapsedTime_1 = (endTime - startTime);
+        auto elapsedTime1 = (endTime - startTime);
 
-        sumT_1 += elapsedTime_1.count();
+        sumT1 += elapsedTime1.count();
 
         startTime = high_resolution_clock::now();
         printMatrix_b(matrix);
         endTime = high_resolution_clock::now();
 
         // Calcular diferencia entre los tiempos
-        auto elapsedTime_2 = (endTime - startTime);      
-        sumT_2 += elapsedTime_2.count();
+        auto elapsedTime2 = (endTime - startTime);      
+        sumT2 += elapsedTime2.count();
     }
 
     /* 
     Se divide la suma de tiempos entre la precision - 1 para obtener el promedio, se resta 1 ya que 
     es el tamaño minimo de matriz por lo que no se ejecutan 100 mediciones, sino 100 - 1, o sea 99.
     */
-    auto tiempo_promedio_1 = sumT_1 / (precision - 1);
-    auto tiempo_promedio_2 = sumT_2 / (precision - 1);
+    auto avgTime1 = sumT1 / (precision - 1);
+    auto avgTime2 = sumT2 / (precision - 1);
 
-    cout << "Tiempo promedio de " << precision << " printeos sin condicionales: " << tiempo_promedio_1 << "[ns]" << endl;
-    cout << "Tiempo promedio de " << precision << " printeos con condicionales: " << tiempo_promedio_2 << "[ns]" << endl;
+    cout << "Tiempo promedio de " << precision << " printeos sin condicionales: " << avgTime1 << "[ns]" << endl;
+    cout << "Tiempo promedio de " << precision << " printeos con condicionales: " << avgTime2 << "[ns]" << endl;
 }

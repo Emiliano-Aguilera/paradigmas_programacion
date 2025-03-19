@@ -6,39 +6,37 @@
 
 using namespace std;
 
-using namespace std;
-
 // Prototipos de funcion
-void logMessage(string, int tag); // logMessage normal
-void logMessage(string message, string archivo, int linea); // logMessage error en linea de archivo
-void logMessage(string message, string username); // logMessage seguridad de usuario
+void logMessage(string, int); // logMessage normal
+void logMessage(string, string, int); // logMessage error en linea de archivo
+void logMessage(string, string); // logMessage seguridad de usuario
 
-int test_logMessage();
+int testLogMessage();
 
 // LAST no es valido, se usa para poder añadir nuevas tags sin necesidad de modificar el check
 enum TAGS {DEBUG, INFO, WARNING, ERROR, CRITICAL, SECURITY, LAST};
 const string tagStrings[] = {"DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL", "SECURITY"};
 
 int main() {
-    return test_logMessage();
+    return testLogMessage();
 }
 
 // Ejercicio a
 void logMessage(string message, int tag) {
     // Abre el archivo en modo append
     ofstream outFile("log.txt", ios::app);
-    string tag_string;
+    string tagString;
 
     /* Checkea que el tag usado sea correcto, de lo contrario inserta un tag de error con el 
     mensaje de error */
     if (tag >= DEBUG && tag < LAST) {
         // Accede a la string correspondiente al tag
-        tag_string = tagStrings[tag];
+        tagString = tagStrings[tag];
 
         // Check de que el archivo se abrio correctamente
         if (outFile.is_open()) {
             // Escribir en el archivo el mensaje con su tag correspondiente
-            outFile << format("[{}] <{}>\n", tag_string, message);
+            outFile << format("[{}] <{}>\n", tagString, message);
         } else {
             // Si hay un error, lanza un runtime error, que es manejado por test_LogMessage
             throw runtime_error("Error abriendo archivo");
@@ -55,10 +53,10 @@ void logMessage(string message, int tag) {
 // Ejercicio b
 // Ejercicio II
 // Sobrecarga de logMessage que permite loggear un error en la linea de un archivo
-void logMessage(string message, string archivo, int linea) {
+void logMessage(string message, string file, int line) {
     // Se crea una string que contiene el mensaje, la linea y el archivo
     string errorMessage = format(
-        "{} en la linea {} del archivo {}", message, linea, archivo);
+        "{} en la linea {} del archivo {}", message, line, file);
     /* Una vez creada la string que contiene el mensaje correspondiente, se usa la 
     funcion original para loggear el error */
     logMessage(errorMessage, ERROR);
