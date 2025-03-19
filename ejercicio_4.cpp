@@ -64,7 +64,7 @@ bool compareString (const char* s1, const char* s2, int position) {
 }
 
 // Funcion recursiva que compara strings en tiempo de compilacion
-constexpr bool CompareStringConst (const char* s1, const char* s2, int position) {
+constexpr bool compareStringConst (const char* s1, const char* s2, int position) {
     /* 
     Si ambos caracteres son iguales, y el caracter siguiente no es el final de string,
     entonces entra en recursividad, esto va a suceder hasta que se llegue al final de
@@ -103,7 +103,7 @@ void testCompareStringConst(const char* s1, const char* s2) {
     // Tomar tiempo de inicio
     auto startTime = high_resolution_clock::now();   
     // Ejecutar comparacion
-    bool result = CompareStringConst(s1, s2, 0);
+    bool result = compareStringConst(s1, s2, 0);
     // Tomar tiempo de fin
     auto endTime = high_resolution_clock::now();
     // Calcular diferencia entre los tiempos
