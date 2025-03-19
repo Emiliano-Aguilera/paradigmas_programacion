@@ -20,7 +20,7 @@ using vector_int =  vector<vector<int>>;
 vector_int createMatrix(int size);
 void printMatrix(vector_int matrix);
 void printMatrix_b(vector_int matrix);
-void compareSolutions();
+void compareSolutions(int precision);
 
 int main() {
     int n;
@@ -45,7 +45,7 @@ int main() {
     // compara ambos metodos de printeo usando 2 <= n <= 100
     auto startTime = high_resolution_clock::now();
     // Ejecutar comparacion
-    compareSolutions();
+    compareSolutions(30);
     // Tomar tiempo de fin
     auto endTime = high_resolution_clock::now();
     // Calcular diferencia entre los tiempos
@@ -122,58 +122,37 @@ void printMatrix_b(vector_int matrix) {
 
 /*
 Compara ambos metodos de iteracion usando chrono para medir el tiempo y usando matrices cada vez mas grandes,
-yendo desde tamaño 3 hasta precision, entendiendo que mientras mas iteraciones, mas precisa sera la medida del tiempo
+yendo desde tamaño 2 hasta precision, entendiendo que mientras mas iteraciones, mas precisa sera la medida del tiempo
 ya que se calcula el promedio de todos los tiempos.
 */
-void compareSolutions() {
-    // Primero se hace un tiempo fuera del for ya se debe definir el tipo de dato de sumT_1 y sumT_2. 
+void compareSolutions(int precision) {
+    // Variables que llevan la suma de los tiempos
+    int sumT_1;
+    int sumT_2;
 
-    // Crea un matriz de tamaño 2x2
-    vector_int matrix = createMatrix(2);
-    // Tomar el tiempo que toma imprimir con el metodo sin condicionales
-    auto startTime = high_resolution_clock::now();
-    printMatrix(matrix);
-    auto endTime = high_resolution_clock::now();
-    // Calcular diferencia entre los tiempos
-    auto elapsedTime_1 = (endTime - startTime);
-    
-    // Tomar el tiempo que toma imprimir con el metodo que usa condicionales
-    startTime = high_resolution_clock::now();
-    printMatrix_b(matrix);
-    endTime = high_resolution_clock::now();
-    // Calcular diferencia entre los tiempos
-    auto elapsedTime_2 = (endTime - startTime);
-
-    // Asigna ambos tiempos a las variables que van a contener la suma de tiempos de todas las iteraciones
-    auto sumT_1 = elapsedTime_1;
-    auto sumT_2 = elapsedTime_2;
-
-    // Define la cantidad de veces que se va a ejecutar la medicion y el tamaño maximo de matrix que se va a medir
-    int precision = 100;
-
-    for (int i = 3; i <= precision; i++) {
+    for (int i = 2; i <= precision; i++) {
         vector_int matrix = createMatrix(i);
         // Tomar el tiempo que toma imprimir con el metodo de condicionales
-        startTime = high_resolution_clock::now();
+        auto startTime = high_resolution_clock::now();
         printMatrix(matrix);
-        endTime = high_resolution_clock::now();
+        auto endTime = high_resolution_clock::now();
 
         // Calcular diferencia entre los tiempos
-        elapsedTime_1 = (endTime - startTime);
+        auto elapsedTime_1 = (endTime - startTime);
 
-        sumT_1 += elapsedTime_1;
+        sumT_1 += elapsedTime_1.count();
 
         startTime = high_resolution_clock::now();
         printMatrix_b(matrix);
         endTime = high_resolution_clock::now();
 
         // Calcular diferencia entre los tiempos
-        elapsedTime_2 = (endTime - startTime);      
-        sumT_2 += elapsedTime_2;
+        auto elapsedTime_2 = (endTime - startTime);      
+        sumT_2 += elapsedTime_2.count();
     }
 
     /* 
-    Se divide la suma de tiempos entre la precision - 1 para obtener el promedio, se resta 2 ya que es el tamaño minimo de matriz
+    Se divide la suma de tiempos entre la precision - 1 para obtener el promedio, se resta 1 ya que es el tamaño minimo de matriz
      por lo que no se ejecutan 100 mediciones, sino 100 - 1, o sea 99
     */
     auto tiempo_promedio_1 = sumT_1 / (precision - 1);
