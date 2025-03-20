@@ -62,6 +62,7 @@ unique_ptr<Node> create_node(int value) {
     node->value = value;
     // Inicializa el puntero al siguiente nodo como nullptr
     node->next = nullptr;
+    
     return node;
 }
 
@@ -69,7 +70,7 @@ unique_ptr<Node> create_node(int value) {
 void push_front(int value) {
     // Crea el nodo a insertar
     unique_ptr<Node> node = create_node(value);
-    // Hace que el nodo creado apunte al primer nodo de la lista(que pasa a ser el segundo)
+    // Hace que el nodo creado apunte al primer nodo de la lista (que pasa a ser el segundo)
     node->next = move(first);
     // El puntero "primero" pasa a apuntar al nuevo nodo, haciendolo el primero de la lista
     first = move(node);
@@ -79,7 +80,8 @@ void push_front(int value) {
 void push_back(int value) {
     // Crea el nodo a insertar
     unique_ptr<Node> node = create_node(value);
-    // Puntero que apunta al nodo actual durante la iteracion, iniciando en el primer nodo
+
+    // Puntero que apunta al nodo actual durante la iteracion, sin ownership
     Node* iterator = first.get();
 
     // Itera sobre los nodos hasta llegar al ultimo, el cual tiene next = nullptr
@@ -104,6 +106,7 @@ void insert(int value, int position) {
     } else {
         // Crea el nodo a insertar
         unique_ptr<Node> node = create_node(value);
+
         // Puntero al nodo actual para iterar, comienza en el primer nodo
         Node* iterator = first.get();
 
@@ -159,7 +162,7 @@ void print_list() {
     cout << "null" << endl;
 }
 
-// Cuenta los nodos, es una funcion auxiliar
+// Cuenta los nodos, funcion auxiliar
 int count_nodes() {
     // Puntero al primer nodo, se usa para iterar
     Node* iterator = first.get();

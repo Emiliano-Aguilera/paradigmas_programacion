@@ -4,6 +4,13 @@
 #include <fstream>
 #include <stdexcept>
 
+/*
+Solucion ejercicio 2 Homework 1
+Se debe hacer una funcion logMessage que tome una string y una severidad.
+Las severidades, llamadas tag, se manejan con 2 estructuras enlazadas,
+un enum y un string.*/
+
+
 using namespace std;
 
 // Prototipos de funcion
