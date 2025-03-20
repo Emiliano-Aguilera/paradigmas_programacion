@@ -7,10 +7,14 @@
 using namespace std;
 
 // Prototipos de funcion
-void logMessage(string, int); // logMessage normal
-void logMessage(string, string, int); // logMessage error en linea de archivo
-void logMessage(string, string); // logMessage seguridad de usuario
+// logMessage normal
+void logMessage(string, int); 
+// logMessage error en linea de archivo
+void logMessage(string, string, int); 
+// logMessage seguridad de usuario
+void logMessage(string, string); 
 
+// Funcion que ejecuta los tests
 int testLogMessage();
 
 // LAST no es valido, se usa para poder añadir nuevas tags sin necesidad de modificar el check
