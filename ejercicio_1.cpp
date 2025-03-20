@@ -5,11 +5,8 @@
 
 /*
 Resolucion del ejercicio 1 del Homework 1
-Se debe crear una matriz cuadrada de tamaño n y rellenarla con valores desde n hasta n^2
+Se debe crear una matriz cuadrada de tamaño n y rellenarla con valores desde 0 hasta n^2
 Luego se debe crear una funcion que imprima la matriz usando un solo loop.
-    Para este inciso, se me ocurrieron dos formas distintas de llegar a una solucion,
-    la primera usa condicionales y la segunda una relacion entre el indice y la posicion en la matriz.
-    Deje ambas soluciones porque luego de testear el tiempo que toman noto que es muy similar. 
 */
 
 using namespace std;
@@ -19,8 +16,6 @@ using VectorInt =  vector<vector<int>>;
 // prototipos de funcion
 VectorInt createMatrix(int size);
 void printMatrix(VectorInt matrix);
-void printMatrix_b(VectorInt matrix);
-void compareSolutions(int precision);
 
 int main() {
     int n;
@@ -40,19 +35,7 @@ int main() {
 
     // Imprimir matriz
     printMatrix(matrix);
-    //printMatrix_b(matrix, n);
-
-    // compara ambos metodos de printeo usando 2 <= n <= 100
-    auto startTime = high_resolution_clock::now();
-    // Ejecutar comparacion
-    compareSolutions(30);
-    // Tomar tiempo de fin
-    auto endTime = high_resolution_clock::now();
-    // Calcular diferencia entre los tiempos
-    auto elapsedTime = (endTime - startTime);
-
-    cout << "Tiempo total: " << elapsedTime << endl;
-
+    
     return 0;
 }
 
@@ -93,71 +76,4 @@ void printMatrix(VectorInt matrix) {
         // Imprime el valor usando format para que sea mas legible el codigo.
         cout << format("M[{}][{}] = {}\n", i, j, matrix[i][j]);
     }
-}
-
-// Imprime una matriz usando condicionales y un solo for
-void printMatrix_b(VectorInt matrix) {
-    // Calcula el tamaño de la matriz
-    int size = matrix.size();
-
-    // Se definen i y j de esta forma para iterar de mayor a menor
-    int i = size-1;
-    int j = size-1;
-    
-    // k va de 0 a n^2
-    for (int k = 0; k < size*size; k++) {
-        cout << format("M[{}][{}] = {}\n", i, j, matrix[i][j]);
-
-        // Si j es 0, significa que llegue al final de la fila, por lo tanto debo cambiar i y reiniciar j
-        if (j == 0) {
-            i--;
-            j = size-1;
-        }
-        // Si j no es 0, entonces debo seguir iterando sobre la fila, disminuyendo j
-        else {
-            j--;
-        }
-    }
-}
-
-/*
-Compara ambos metodos de iteracion usando chrono para medir el tiempo y usando matrices cada vez mas grandes,
-yendo desde tamaño 2 hasta precision, entendiendo que mientras mas iteraciones, mas precisa sera la medida del tiempo
-ya que se calcula el promedio de todos los tiempos.
-*/
-void compareSolutions(int precision) {
-    // Variables que llevan la suma de los tiempos
-    int sumT1;
-    int sumT2;
-
-    for (int i = 2; i <= precision; i++) {
-        VectorInt matrix = createMatrix(i);
-        // Tomar el tiempo que toma imprimir con el metodo de condicionales
-        auto startTime = high_resolution_clock::now();
-        printMatrix(matrix);
-        auto endTime = high_resolution_clock::now();
-
-        // Calcular diferencia entre los tiempos
-        auto elapsedTime1 = (endTime - startTime);
-
-        sumT1 += elapsedTime1.count();
-
-        startTime = high_resolution_clock::now();
-        printMatrix_b(matrix);
-        endTime = high_resolution_clock::now();
-
-        // Calcular diferencia entre los tiempos
-        auto elapsedTime2 = (endTime - startTime);      
-        sumT2 += elapsedTime2.count();
-    }
-
-    /* 
-    Se divide la suma de tiempos entre la precision - 1 para obtener el promedio, se resta 1 ya que 
-    es el tamaño minimo de matriz por lo que no se ejecutan 100 mediciones, sino 100 - 1, o sea 99.
-    */
-    auto avgTime1 = sumT1 / (precision - 1);
-    auto avgTime2 = sumT2 / (precision - 1);
-
-    cout << "Tiempo promedio de " << precision << " printeos sin condicionales: " << avgTime1 << "[ns]" << endl;
-    cout << "Tiempo promedio de " << precision << " printeos con condicionales: " << avgTime2 << "[ns]" << endl;
 }
