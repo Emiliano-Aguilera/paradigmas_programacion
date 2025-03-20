@@ -7,7 +7,7 @@ using namespace chrono;
 // Prototipos de funcion
 bool compareString (const char*, const char*, int);
 
-// Funcion recursiva que compara strings en tiempo de compilacion
+// Funcion recursiva que compara strings en tiempo de compilacion, no se puede declarar como prototipo.
 consteval bool compareStringConst (const char* s1, const char* s2, int position) {
     /* 
     Si ambos caracteres son iguales, y el caracter siguiente no es el final de string,

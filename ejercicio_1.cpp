@@ -3,12 +3,6 @@
 #include <vector>
 #include <chrono>
 
-/*
-Resolucion del ejercicio 1 del Homework 1
-Se debe crear una matriz cuadrada de tamaño n y rellenarla con valores desde 0 hasta n^2
-Luego se debe crear una funcion que imprima la matriz usando un solo loop.
-*/
-
 using namespace std;
 using namespace chrono;
 using VectorInt =  vector<vector<int>>;
