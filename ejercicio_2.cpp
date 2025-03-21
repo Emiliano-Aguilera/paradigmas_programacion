@@ -78,7 +78,7 @@ void logMessage(string message, string username) {
 // Ejercicio IV
 /* Funcion que ejecuta logMessage con distintas entradas, maneja los posibles runtime errors 
 y detiene la ejecucion, retornando 1 y haciendo que main retorne 1. */
-int test_logMessage() {
+int testLogMessage() {
     // Intenta ejecutar el codigo, y maneja los errores
     try {
         // Una entrada de cada tipo para logMessage (ejercicio a)
